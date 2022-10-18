@@ -1,5 +1,5 @@
-import logo from './logo.svg';
-import logo_tienda from './logo-shop.jpg';
+//import logo from './logo.svg';
+import logo_tienda from './images/logo-shop.jpg';
 import './App.css';
 
 import {
