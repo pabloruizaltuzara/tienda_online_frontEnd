@@ -12,15 +12,15 @@ function ProductList(props) {
             return (
               <Grid.Column>
                 <Product
-                  key={p.id}
-                  name={p.name}
+                  key={p.idproducto}
+                  nombre={p.nombre}
                   picture={p.picture}
-                  price={p.price}
+                  precio_venta={p.precio_venta}
                   marca={p.marca}
-                  status={p.status}
-                  onSaveProduct={() => props.onSaveProduct(p.id)}
-                  onIncrementProduct={() => props.onIncrementProduct(p.id)}
-                  onRemoveProduct={() => props.onRemoveProduct(p.id)}
+                  stock={p.stock}
+                  onSaveProduct={() => props.onSaveProduct(p.idproducto)}
+                  onIncrementProduct={() => props.onIncrementProduct(p.idproducto)}
+                  onRemoveProduct={() => props.onRemoveProduct(p.idproducto)}
                 />
               </Grid.Column>
             )

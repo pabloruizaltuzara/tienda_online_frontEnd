@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { Container, Grid, Header } from 'semantic-ui-react'
+import axios from "axios";
+
+import { Container, Grid, Header, Input } from 'semantic-ui-react'
 import Menu from '../Menu'
 import ListaProducto from '../ListaProductos'
 import ListaCarrito from '../ListaCarrito'
@@ -7,13 +9,22 @@ import Ordenar from '../Ordenar'
 import style from './App.css'
 
 //logos
-import camiseta_tipo_polo from '../../images/camisa_polo.PNG';
+import camiseta_tipo_polo from '../../images/camisa_polo.jpg';
 import camiseta_atletico_madrid from '../../images/camiseta-atletico-madrid.png';
 import camiseta_barcelona from '../../images/camiseta-barcelona.png';
-import camiseta_antes from '../../images/camiseta-antes-partido.PNG';
-import camiseta_de_entrenamiento from '../../images/camiseta-de-entrenamiento-real-madrid.PNG';
-import camiseta_blanca_authentic_real_madrid from '../../images/camiseta-blanca-authentic-real-madrid.PNG';
+import camiseta_antes from '../../images/camiseta-antes-partido.jpg';
+import camiseta_de_entrenamiento from '../../images/camiseta-de-entrenamiento-real-madrid.jpg';
+import camiseta_blanca_authentic_real_madrid from '../../images/camiseta-blanca-authentic-real-madrid.jpg';
 
+const request = new XMLHttpRequest();
+request.open('GET', 'http://localhost/apiVentaonline-main/index.php/Producto/list', true);
+
+
+request.onload = function () {
+  const data = JSON.parse(this.response);
+}
+
+request.send();
 
 class App extends Component {
   constructor(props) {
@@ -24,59 +35,57 @@ class App extends Component {
       sum: 0,
       products: [
         {
-          id: 1,
-          name: 'Camiseta tipo polo para dama',
+          idproducto: 1,
+          nombre: 'Camiseta tipo polo para dama',
           picture: camiseta_tipo_polo,
-          price: 123,
-          datails: 'Compra Protegida, recibe el producto que esperabas o te devolvemos tu dinero.',
+          precio_venta: 123,
+          descripcion: 'Compra Protegida, recibe el producto que esperabas o te devolvemos tu dinero.',
           marca: 'Adidas',
-          status: 5,
+          stock: 5,
         },
         {
-          id: 2,
-          name: 'Camiseta atletico Madrid',
+          idproducto: 2,
+          nombre: 'Camiseta atletico Madrid',
           picture: camiseta_atletico_madrid,
-          price: 390,
-          datails: 'Compra Protegida, recibe el producto que esperabas o te devolvemos tu dinero.',
+          precio_venta: 390,
+          descripcion: 'Compra Protegida, recibe el producto que esperabas o te devolvemos tu dinero.',
           marca: 'Adidas',
-          status: 6,
+          stock: 6,
         },
         {
-          id: 3,
-          name: 'Camiseta Barcelona',
+          idproducto: 3,
+          nombre: 'Camiseta Barcelona',
           picture: camiseta_barcelona,
-          price: 189,
-          datails: 'Compra Protegida, recibe el producto que esperabas o te devolvemos tu dinero.',
+          precio_venta: 189,
+          descripcion: 'Compra Protegida, recibe el producto que esperabas o te devolvemos tu dinero.',
           marca: 'Nike',
-          status: 2,
+          stock: 2,
         },
         {
-          id: 4,
-          name: 'Camiseta Barcelona antes del mundial',
+          idproducto: 4,
+          nombre: 'Camiseta Barcelona antes del mundial',
           picture: camiseta_antes,
-          price: 780,
-          datails: 'Compra Protegida, recibe el producto que esperabas o te devolvemos tu dinero.',
+          precio_venta: 780,
+          descripcion: 'Compra Protegida, recibe el producto que esperabas o te devolvemos tu dinero.',
           marca: 'Nike',
-          status: 6,
+          stock: 6,
         },
         {
-          id: 5,
-          name: 'Camiseta de entrenamiento real madrid',
+          idproducto: 5,
+          nombre: 'Camiseta de entrenamiento real madrid',
           picture: camiseta_de_entrenamiento,
-          price: 328,
+          precio_venta: 328,
           marca: 'Nike',
-          status: 10,
+          stock: 10,
         },
         {
-          id: 6,
-          name: 'Camiseta blanca autentico madrid',
+          idproducto: 6,
+          nombre: 'Camiseta blanca autentico madrid',
           picture: camiseta_blanca_authentic_real_madrid,
-          price: 2733,
+          precio_venta: 2733,
           marca: 'Adidas',
-          status: 4,
-        }
-
-        
+          stock: 4,
+        } 
       ],
       cart: [],
     }
@@ -110,10 +119,10 @@ class App extends Component {
 
   manejarAñadirProducto(indexCart, indexProduct){
     var statusCopy = Object.assign({}, this.state);
-    if (statusCopy.products[indexProduct].status !== 0) {
-      statusCopy.cart[indexCart].total += statusCopy.cart[indexCart].price
+    if (statusCopy.products[indexProduct].stock !== 0) {
+      statusCopy.cart[indexCart].total += statusCopy.cart[indexCart].precio_venta
       statusCopy.cart[indexCart].order += 1
-      statusCopy.products[indexProduct].status -= 1
+      statusCopy.products[indexProduct].stock -= 1
       this.setState(statusCopy)
       this.sumaProductos(statusCopy.cart)
       this.sumaTotal(statusCopy.cart)
@@ -123,46 +132,46 @@ class App extends Component {
   }
 
   manejarRemoverProducto(productId) {
-    let product = this.state.products.find(p => p.id === productId);
-    let indexProduct = this.state.products.findIndex(x => x.id === product.id)
-    let cart = this.state.cart.find(p => p.id === productId)
-    let indexCart = this.state.cart.findIndex(x => x.id === cart.id)
+    let product = this.state.products.find(p => p.idproducto === productId);
+    let indexProduct = this.state.products.findIndex(x => x.idproducto === product.idproducto)
+    let cart = this.state.cart.find(p => p.idproducto === productId)
+    let indexCart = this.state.cart.findIndex(x => x.idproducto === cart.idproducto)
 
     var statusCopy = Object.assign({}, this.state);
-    if(statusCopy.cart[indexCart].total === statusCopy.cart[indexCart].price ){
+    if(statusCopy.cart[indexCart].total === statusCopy.cart[indexCart].precio_venta ){
       indexCart !== -1 && statusCopy.cart.splice( indexCart, 1 );
       this.setState(statusCopy)
       alert('El producto fue eliminado del carrito de compras')
     } else {
-      statusCopy.cart[indexCart].total -= statusCopy.cart[indexCart].price
-      statusCopy.products[indexProduct].status += 1
+      statusCopy.cart[indexCart].total -= statusCopy.cart[indexCart].precio_venta
+      statusCopy.products[indexProduct].stock += 1
       statusCopy.cart[indexCart].order -= 1
       statusCopy.total -= 1
-      statusCopy.sum -= statusCopy.cart[indexCart].price
+      statusCopy.sum -= statusCopy.cart[indexCart].precio_venta
       this.setState(statusCopy)
     }
   }
 
   manejarGuardarProducto(productId) {
-    let product = this.state.products.find(p => p.id === productId);
-    let indexProduct = this.state.products.findIndex(x => x.id === product.id)
+    let product = this.state.products.find(p => p.idproducto === productId);
+    let indexProduct = this.state.products.findIndex(x => x.idproducto === product.idproducto)
 
     var productCart = {
-      id: product.id,
-      name: product.name,
+      idproducto: product.idproducto,
+      nombre: product.nombre,
       img: product.picture,
-      price: product.price,
+      precio_venta: product.precio_venta,
       order: 1,
-      total: product.price
+      total: product.precio_venta
     }
 
-    var exist = this.state.cart.find(p => p.id === productId)
+    var exist = this.state.cart.find(p => p.idproducto === productId)
     if (undefined !== exist && exist !== null) {
-      let indexCart = this.state.cart.findIndex(x => x.id === exist.id)
+      let indexCart = this.state.cart.findIndex(x => x.idproducto === exist.idproducto)
       this.manejarAñadirProducto(indexCart, indexProduct)
     }else{
       var statusCopy = Object.assign({}, this.state);
-      statusCopy.products[indexProduct].status -= 1
+      statusCopy.products[indexProduct].stock -= 1
       this.sumaProductos(statusCopy.cart)
       this.sumaTotal(statusCopy.cart)
       this.setState({

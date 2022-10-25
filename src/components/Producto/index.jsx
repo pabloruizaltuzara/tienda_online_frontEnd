@@ -8,13 +8,13 @@ function Product(props) {
     <Card style={{ marginTop: 15}} className="center">
       <Image size="small" style={{with: 100}} src={props.picture}/>
       <Card.Content>
-        <Card.Header style={{fontSize: 15}}>{props.name}</Card.Header>
+        <Card.Header style={{fontSize: 15}}>{props.nombre}</Card.Header>
         <Card.Meta>
-          <Format number={props.price}/>
+          <Format number={props.precio_venta}/>
         </Card.Meta>
         <Card.Description>
           <Label>{props.marca}</Label>
-          <Label>{props.status} en stock</Label>
+          <Label>{props.stock} en stock</Label>
         </Card.Description>
       </Card.Content>
       <Card.Content extra>
