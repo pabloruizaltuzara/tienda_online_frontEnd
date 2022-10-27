@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import axios from "axios";
+//import axios from "axios";
 
-import { Container, Grid, Header, Input } from 'semantic-ui-react'
+//import { Header, Input } from 'semantic-ui-react'
+import { Container, Grid } from 'semantic-ui-react'
 import Menu from '../Menu'
 import ListaProducto from '../ListaProductos'
 import ListaCarrito from '../ListaCarrito'
@@ -16,15 +17,9 @@ import camiseta_antes from '../../images/camiseta-antes-partido.jpg';
 import camiseta_de_entrenamiento from '../../images/camiseta-de-entrenamiento-real-madrid.jpg';
 import camiseta_blanca_authentic_real_madrid from '../../images/camiseta-blanca-authentic-real-madrid.jpg';
 
-const request = new XMLHttpRequest();
-request.open('GET', 'http://localhost/apiVentaonline-main/index.php/Producto/list', true);
 
+//http://localhost/apiVentaonline-main/index.php/Producto/list'
 
-request.onload = function () {
-  const data = JSON.parse(this.response);
-}
-
-request.send();
 
 class App extends Component {
   constructor(props) {
