@@ -3,7 +3,7 @@ import {
   MDBBtn,
   MDBContainer,
   MDBCard,
-  MDBCardBody,
+  MDBCardBody,                  
   MDBCardImage,
   MDBRow,
   MDBCol,
@@ -12,7 +12,7 @@ import {
 }
 from 'mdb-react-ui-kit';
 
-function App() {
+function App() {b
   return (
     <MDBContainer className="my-5">
 
